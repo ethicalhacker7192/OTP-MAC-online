@@ -1,4 +1,3 @@
-import binascii
 import string
 import random
 import time
@@ -132,7 +131,6 @@ def send_message(ip, msg):
         # Compute the MAC using the shared secret key and send it along with the encrypted message and key
         mac = hmac.new(shared_secret_key, encrypt(msg, key), digestmod=hashlib.sha256).digest()
         data = {'msg': encrypt(msg, key), 'encrypted_key': encrypted_key, 'mac': mac}
-        print(f'Encrypted Message: {data["msg"]}')
         serialized_data = pickle.dumps(data)
         s.sendall(serialized_data)
         print("Sent encrypted message, key and MAC")
