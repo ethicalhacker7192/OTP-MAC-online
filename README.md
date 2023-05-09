@@ -7,6 +7,10 @@ to install and run on linux(python3 required):
 
     git clone https://github.com/ethicalhacker7192/OTP-MAC-online.git && cd OTP-MAC-online && python3 -m pip install -r requirements.txt && python3 OTP_MAC.py
 
+if you have no python installed on linux, install it using this command
+
+    sudo apt install python3
+
 to install and run on windows:
 install zip or if you already have git then you can just do this command
 
