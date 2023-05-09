@@ -104,7 +104,7 @@ def send_message(ip, msg):
     serialized_public_key = private_key.public_key().public_bytes(encoding=serialization.Encoding.PEM, format=serialization.PublicFormat.SubjectPublicKeyInfo)
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         BUFFER_LIMIT = 1024 * 10
-        s.connect((ip, 12345))
+        s.connect((ip, 5555))
         print("Connected to receiver")
         s.sendall(serialized_parameters + b'----END PARAMETERS----')
         print("Sent domain parameters")
@@ -142,7 +142,7 @@ def send_message(ip, msg):
 def receive_message():
     BUFFER_LIMIT = 1024 * 10
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind(('0.0.0.0', 12345))
+    server.bind(('0.0.0.0', 5555))
     server.listen(1)
     conn, addr = server.accept()
     print('Connected to', addr)
