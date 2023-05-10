@@ -25,7 +25,6 @@ if you have already skip this step and type this into command prompt
        
 ## DISCLAIMER
 
-I am will not be held liable for your actions, this script should only be used for educational purposes!
-You will be responsible for your own actions.
+This software is intended for educational purposes only. Under no circumstances should it be used for malicious purposes, including but not limited to cyber attacks or cyber warfare. The creator of this software assumes no responsibility for any damage or harm caused by the use or misuse of this software. This software is not intended for use by government agencies or for any activities related to war, espionage, or any other illegal activities.
 
 for more information please refer to the license.txt file.
