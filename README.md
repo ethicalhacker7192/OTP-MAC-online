@@ -17,7 +17,7 @@ install zip or if you already have git then you can just do this command
     git clone https://github.com/ethicalhacker7192/OTP-MAC-online.git
         
 next if you have not already download the latest release of python from the official [website](https://python.org/downloads).
-if you have already skip this step and type this into command prompt
+if you have already, please skip this step and type this into command prompt
 
     cd OTP-MAC-online
     py -m pip install -r requirements.txt
