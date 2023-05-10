@@ -28,4 +28,4 @@ if you have already skip this step and type this into command prompt
 I am will not be held liable for your actions, this script should only be used for educational purposes!
 You will be responsible for your own actions.
 
-for more information please refer to the licence.txt file.
+for more information please refer to the license.txt file.
