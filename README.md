@@ -24,7 +24,9 @@ if you have already, please skip this step and type this into command prompt
     py GuineaSend.py
 ## Contribute
 
-if you like this project, consider helping out point out problems in code, this will help me find issues and bugs, also anybody can contribute. I will give credit for contribution to all that contribute, so help out and allow many people to have programs like this in the future.
+If you like this project, consider helping out point out problems in code, this will help me find issues and bugs, also anybody can contribute. I will give credit for contribution to all that contribute, so help out and allow many people to have programs like this in the future.
+
+Also, to those who have unsupported versions of Linux or Windows, etc. please let me know and I will make special installation and execution instructions to help overcome this, if needed I will even try to make a version just for that OS.
 
 
 ## DISCLAIMER
