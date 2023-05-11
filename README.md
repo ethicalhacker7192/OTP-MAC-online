@@ -1,5 +1,5 @@
 # OTP-MAC-online
-a One Time Pad encryption program that also encrypts the key in MAC SHA-256 bit hash.
+a One Time Pad encryption program called GuineaSend that also encrypts the key in MAC SHA-256 bit hash.
 
 
 to install and run on linux(python3 required):
