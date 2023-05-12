@@ -25,7 +25,22 @@ help: GuineaSender r|s|t|q
 s: send
 r: receive
 t: transcieve (recieve and send at same time)
-q: quit """
+q: quit 
+
+"""
+
+def get_ip_address():
+    try:
+        # The following line of code could fail if the computer is not connected to a network
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # The IP address isn't important here, we just need to specify a valid address
+        s.connect(("8.8.8.8", 80))
+        ip_address = s.getsockname()[0]
+        s.close()
+    except OSError:
+        ip_address = '127.0.0.1'
+    return ip_address
+
 def generate_mac(msg, key):
     mac = hmac.new(key, msg.encode('utf-8'), hashlib.sha512).hexdigest()
 
@@ -257,6 +272,7 @@ def tranceive_message(ip, msg):
 
 if __name__ == '__main__':
     print(help)
+    print(f'Your IP address is {get_ip_address()}')
     opt = input("do you want to receive (r), send (s), or transceive (t)? (press q to quit) ")
     if opt == "s":
         ip = input("Enter the IP address to send the message to: ")
