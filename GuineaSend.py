@@ -10,13 +10,19 @@ import hashlib
 from cryptography.hazmat.primitives.asymmetric import dh
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
+from prompt_toolkit import PromptSession
+from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+from prompt_toolkit.history import InMemoryHistory
+from prompt_toolkit.patch_stdout import patch_stdout
+from prompt_toolkit.shortcuts import print_formatted_text
 
+rng = "False"
 keyboard = string.printable[:-5]
 one_time_pad = list(keyboard)
 
 help = """
-   ___      _               ___              _         
-  / __|_  _(_)_ _  ___ __ _/ __| ___ _ _  __| |___ _ _ 
+   ___      _               ___              _        
+  / __|_  _(_)_ _  ___ __ _/ __| ___ _ _  __| |___ _ _
  | (_ | || | | ' \/ -_) _` \__ \/ -_) ' \/ _` / -_) '_|
   \___|\_,_|_|_||_\___\__,_|___/\___|_||_\__,_\___|_|  
                                                        
@@ -25,7 +31,7 @@ help: GuineaSender r|s|t|q
 s: send
 r: receive
 t: transcieve (recieve and send at same time)
-q: quit 
+q: quit
 
 """
 
@@ -49,7 +55,7 @@ def generate_mac(msg, key):
         mac += hmac.new(key, mac.encode('utf-8'), hashlib.sha512).hexdigest()
 
     return mac[:1000]
-    
+   
 def encrypt(msg, key):
     ciphertext = bytearray()
     for idx, char in enumerate(msg):
@@ -93,7 +99,7 @@ def decrypt(ciphertext, key):
     return decrypted_text
 
 
-    
+   
 def shared_key_to_string(shared_key, length):
     random.seed(shared_key)
     return ''.join([random.choice(one_time_pad) for _ in range(length)])
@@ -118,30 +124,35 @@ def generate_domain_parameters():
 
 def send_message(ip, msg):
     pipe_chars = "|/-\\"
+    print("To User: I am once again, currently eating my cyber lettuce, please note I will be back when the keys are being generated... -Bear the guinea pig")
     # Generate a random private key for the key agreement protocol
     parameters = generate_domain_parameters()
     private_key = generate_key_pair(parameters)
-
+    for i in range(1000):
+        sys.stdout.write('\r' + '*POPCORNING IN THE BACKGROUND OF YOUR COMPUTER* Creating Private key and Domain Parameters... ' + pipe_chars[i % len(pipe_chars)])
+        sys.stdout.flush()
+        time.sleep(0.01)
+    print('\n WHEEK!! Sucess, Tom will receive the message in no time! Private key and Domain Parameters successfully generated!\n')
     # Serialize and send the parameters for the key agreement protocol
     serialized_parameters = parameters.parameter_bytes(encoding=serialization.Encoding.PEM, format=serialization.ParameterFormat.PKCS3)
 
     # Serialize the public key for the key agreement protocol
     serialized_public_key = private_key.public_key().public_bytes(encoding=serialization.Encoding.PEM, format=serialization.PublicFormat.SubjectPublicKeyInfo)
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        for i in range(100):
-            sys.stdout.write('\r' + 'Connecting to client... ' + pipe_chars[i % len(pipe_chars)])
+        for i in range(1000):
+            sys.stdout.write('\r' + 'WHEEK!! Connecting to client... ' + pipe_chars[i % len(pipe_chars)])
             sys.stdout.flush()
-            time.sleep(0.1)
+            time.sleep(0.01)
 
         BUFFER_LIMIT = 1024 * 10
         s.connect((ip, 5555))
         print("\nConnected to receiver")
 
         # Display a rotating progress indicator while creating the keys
-        for i in range(100):
-            sys.stdout.write('\r' + 'Creating keys... ' + pipe_chars[i % len(pipe_chars)])
+        for i in range(1000):
+            sys.stdout.write('\r' + 'GIVE ME PEAFLAKES!! Creating keys... ' + pipe_chars[i % len(pipe_chars)])
             sys.stdout.flush()
-            time.sleep(0.1)
+            time.sleep(0.01)
 
         s.sendall(serialized_parameters + b'----END PARAMETERS----')
         print("\nSent domain parameters")
@@ -171,10 +182,10 @@ def send_message(ip, msg):
         print(f'\nEncrypted Message: {data["msg"]}')
 
         # Display a rotating progress indicator while sending the message
-        for i in range(100):
-            sys.stdout.write('\r' + 'Sending message... ' + pipe_chars[i % len(pipe_chars)])
+        for i in range(1000):
+            sys.stdout.write('\r' + 'GIVE ME LETTUCE HUUMAN!! Sending message... ' + pipe_chars[i % len(pipe_chars)])
             sys.stdout.flush()
-            time.sleep(0.1)
+            time.sleep(0.01)
 
         serialized_data = pickle.dumps(data)
         s.sendall(serialized_data)
@@ -183,20 +194,22 @@ def send_message(ip, msg):
 
 
 def receive_message():
+    global rng
+    rng = "True"
     BUFFER_LIMIT = 1024 * 10
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(('0.0.0.0', 5555))
     server.listen(1)
+    print('To User: I will be back when bear connects, sorry about that. I am once again, currently eating a salad, who knew I could get fat off of these, anyway see you when bear connects! -Tom')
     conn, addr = server.accept()
-    print('Connected to', addr)
-
+    print('\nWHEEK!! I successfully connected to', addr)
     # Receive the domain parameters for the key agreement protocol
     received_data = b''
     while not received_data.endswith(b'----END PARAMETERS----'):
         received_data += conn.recv(1024)
-    print("\nReceived domain parameters\n")
+    print("\n GIVE ME SWEET PEPPERS!! Received domain parameters from Bear!\n")
     if len(received_data) >= BUFFER_LIMIT:
-        print("\nBuffer limit reached while receiving (domain parameters)\n")
+        print("\n *CHATTERS TEETH ANGERLY* why bear!: Buffer limit reached while receiving (domain parameters)\n")
     serialized_parameters = received_data[:-20]  # Remove the delimiter
 
     parameters = serialization.load_pem_parameters(serialized_parameters, backend=default_backend())
@@ -212,9 +225,9 @@ def receive_message():
     received_data = b''
     while not received_data.endswith(b'----END PUBLIC KEY----'):
         received_data += conn.recv(1024)
-    print("\nReceived sender's public key\n")
+    print("\n *laying in the corner while yawning* whoops, almost fell asleep, also I received Bear's public key!\n")
     if len(received_data) >= BUFFER_LIMIT:
-        print("\nBuffer limit reached while receiving (public key)\n")
+        print("\n *CHATTERS TEETH ANGERLY* Buffer limit reached while receiving (public key)\n")
     serialized_other_public_key = received_data[:-20]  # Remove the delimiter
 
     other_public_key = serialization.load_pem_public_key(serialized_other_public_key, backend=default_backend())
@@ -228,8 +241,7 @@ def receive_message():
         if not chunk:
             break
         serialized_data += chunk
-    print("\nReceived encrypted message, key, and MAC\n")
-
+    print("\n I received the encrypted message, key, and MAC! WHEEK!!\n")
     # Deserialize the received data
     data = pickle.loads(serialized_data)
     encrypted_msg = data['msg']
@@ -239,7 +251,7 @@ def receive_message():
     # Verify the MAC
     expected_mac = hmac.new(shared_secret_key, encrypted_msg, digestmod=hashlib.sha256).digest()
     if not hmac.compare_digest(received_mac, expected_mac):
-        print("\nMAC verification failed\n")
+        print("\n *CHATTERS TEETH ANGERLY* The MAC verification failed!\n")
         conn.close()
         server.close()
         return b''
@@ -251,49 +263,71 @@ def receive_message():
 
     # Decrypt the message using the key
     plaintext = decrypt(encrypted_msg, key)
-    print("\nDecrypted message:", plaintext.decode('utf-8'), "\n")
+    print("\nGIVE ME LETTUCE! decrypted message:", plaintext.decode('utf-8'), "\n")
     conn.close()
     server.close()
+    rng = "False"
 
     return plaintext
-    
 
-def tranceive_message(ip, msg):
-    # Start a new thread to handle the sending
-    send_thread = threading.Thread(target=send_message, args=(ip, msg))
-    send_thread.start()
+def check_receive():
+    global rng
+    while True:
+        if rng == "False":
+            receive_thread = threading.Thread(target=receive_message, daemon=True)
+            receive_thread.start()
+        time.sleep(1)  # Adjust the sleep duration based on your requirements
 
-    # Receive messages in the main thread
-    receive_message()
 
-    
+def transceive_message():
+    receive_thread = threading.Thread(target=receive_message, daemon=True)
+    receive_thread.start()
+    check_receive_thread = threading.Thread(target=check_receive, daemon=True)
+    check_receive_thread.start()
+
+    with patch_stdout():
+        # Prompt for the IP address
+        session = PromptSession(history=InMemoryHistory(), auto_suggest=AutoSuggestFromHistory())
+        ip = session.prompt("Enter the IP address to send the message to: ")
+
+    with patch_stdout():
+        # Send and receive messages
+            # loop for sending messages
+        while True:
+            # Get the message to send
+            msg = session.prompt("\nEnter the message (press 'q' to quit, 'CHANGEIP' to change the listener IP): ")
+
+            # Handle the different types of input
+            if msg == "q":
+                print_formatted_text("I want more lettuce though!")
+                exit(0)
+            elif msg == "CHANGEIP":
+                ip = session.prompt("Enter the new IP address to send the message to: ")
+            else:
+                # Start the send thread
+                send_thread = threading.Thread(target=send_message, args=(ip, msg))
+                send_thread.start()
+
+
 
 
 
 if __name__ == '__main__':
     print(help)
     print(f'Your IP address is {get_ip_address()}')
-    opt = input("do you want to receive (r), send (s), or transceive (t)? (press q to quit) ")
-    if opt == "s":
-        ip = input("Enter the IP address to send the message to: ")
-        msg = input("Enter the message: ")
-        send_message(ip, msg)
-    elif opt == "r":
-        receive_message()
-    elif opt == "t":
-        ip = input("Enter the IP address to send the message to: ")
-        while True:
-            msg = input("Enter the message (press 'q' to quit, and 'CHANGEIP' to change the listener IP): ")
-            if msg == "q":
-                print("exiting...")
-                break
-            elif msg == "CHANGEIP":
-                ip = input("Enter the new IP address to send the message to: ")
-            else:
-                tranceive_message(ip, msg)
-    elif opt == "q":
-        print("exiting...")
-        exit(0)
-    else:
-        print(help)
-        opt = input("Do you want to receive (r), send (s), or transceive (t)? (Press q to quit) ")
+    while True:
+        opt = input("do you want to receive (r), send (s), or transceive (t)? (press q to quit) ")
+        if opt == "s":
+            ip = input("Enter the IP address to send the message to: ")
+            msg = input("Enter the message: ")
+            send_message(ip, msg)
+        elif opt == "r":
+            receive_message()
+        elif opt == "t":
+            transceive_message()
+        elif opt == "q":
+            print("exiting...")
+            exit(0)
+        else:
+            print(help)
+
