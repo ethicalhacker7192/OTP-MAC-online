@@ -1,3 +1,2 @@
 cryptography
-curses
-windows-curses
+prompt-toolkit
