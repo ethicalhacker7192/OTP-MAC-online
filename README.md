@@ -47,6 +47,6 @@ Also, to those who have unsupported versions of Linux or Windows, etc. please le
 
 ## DISCLAIMER
 
-This software is intended for educ/OTP_MAC.pyational purposes only. Under no circumstances should it be used for malicious purposes, including but not limited to cyber attacks or cyber warfare. The creator of this software assumes no responsibility for any damage or harm caused by the use or misuse of this software. This software is strictly prohibited for use by government agencies or for any activities related to war, espionage, or any other illegal activities.
+This software is intended for educational purposes only. Under no circumstances should it be used for malicious purposes, including but not limited to cyber attacks or cyber warfare. The creator of this software assumes no responsibility for any damage or harm caused by the use or misuse of this software. This software is strictly prohibited for use by government agencies or for any activities related to war, espionage, or any other illegal activities.
 
 for more information please refer to the license.txt file.
