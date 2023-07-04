@@ -1,3 +1,2 @@
 cryptography
 prompt-toolkit
-platform
