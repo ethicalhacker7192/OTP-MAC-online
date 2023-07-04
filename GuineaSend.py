@@ -1,12 +1,14 @@
 import threading
 import string
 import random
+import os
 import time
 import sys
 import socket
 import pickle
 import hmac
 import hashlib
+import platform
 from cryptography.hazmat.primitives.asymmetric import dh
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
@@ -31,9 +33,17 @@ help: GuineaSender r|s|t|q
 s: send
 r: receive
 t: transcieve (recieve and send at same time)
-q: quit
+q: quit and self-destruct
 
 """
+
+def selfdestruct():
+    if platform == "Linux":
+        os.system('clear')
+    elif platform == "Windows":
+        os.system('cls')
+    else:
+        os.system('clear')
 
 def get_ip_address():
     try:
@@ -232,7 +242,7 @@ def receive_message():
 
     other_public_key = serialization.load_pem_public_key(serialized_other_public_key, backend=default_backend())
     shared_secret_key = compute_shared_secret(private_key, other_public_key)
-    max_msg_len = 1000  # You can adjust this value according to your requirements
+    max_msg_len = 10000000  # You can adjust this value according to your requirements
 
     # Receive the serialized encrypted message, the encrypted key, and the MAC
     serialized_data = b''
@@ -288,8 +298,23 @@ def transceive_message():
     with patch_stdout():
         # Prompt for the IP address
         session = PromptSession(history=InMemoryHistory(), auto_suggest=AutoSuggestFromHistory())
-        ip = session.prompt("Enter the IP address to send the message to: ")
-
+        ip = session.prompt("Enter the IP address to send the message to (press 'q' to quit): ")
+        if ip == "q":
+            print_formatted_text("Please don't go!")
+            print("\n5")
+            time.sleep(1)
+            print("\n4")
+            time.sleep(1)
+            print("\n3")
+            time.sleep(1)
+            print("\n2")
+            time.sleep(1)
+            print("\n1")
+            print("\n[-] Self destruct initiated!")
+            time.sleep(1)
+            selfdestruct()
+            exit(0)
+        
     with patch_stdout():
         # Send and receive messages
             # loop for sending messages
@@ -300,6 +325,18 @@ def transceive_message():
             # Handle the different types of input
             if msg == "q":
                 print_formatted_text("I want more lettuce though!")
+                print_formatted_text("\n5")
+                time.sleep(1)
+                print_formatted_text("\n4")
+                time.sleep(1)
+                print_formatted_text("\n3")
+                time.sleep(1)
+                print_formatted_text("\n2")
+                time.sleep(1)
+                print_formatted_text("\n1")
+                print_formatted_text("\n[-] Self destruct initiated!")
+                time.sleep(1)
+                selfdestruct()
                 exit(0)
             elif msg == "CHANGEIP":
                 ip = session.prompt("Enter the new IP address to send the message to: ")
@@ -327,6 +364,18 @@ if __name__ == '__main__':
             transceive_message()
         elif opt == "q":
             print("exiting...")
+            print("\n5")
+            time.sleep(1)
+            print("\n4")
+            time.sleep(1)
+            print("\n3")
+            time.sleep(1)
+            print("\n2")
+            time.sleep(1)
+            print("\n1")
+            print("\n[-] Self destruct initiated!")
+            time.sleep(1)
+            selfdestruct()
             exit(0)
         else:
             print(help)
