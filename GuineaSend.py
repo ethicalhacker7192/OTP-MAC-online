@@ -38,9 +38,10 @@ q: quit and self-destruct
 """
 
 def selfdestruct():
-    if platform == "Linux":
+   x = platform.platform()
+    if x.startswith("Linux"):
         os.system('clear')
-    elif platform == "Windows":
+    elif x.startswith("Windows"):
         os.system('cls')
     else:
         os.system('clear')
