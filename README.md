@@ -1,3 +1,5 @@
+![GuineaSender illustration of reassembly](/GuineaSend.jpg)
+[report a bug](https://github.com/ethicalhacker7192/OTP-MAC-online/issues/new) • [wiki](https://github.com/ethicalhacker7192/OTP-MAC-online/wiki)
 # OTP-MAC-online
 a One Time Pad encryption program called GuineaSend that also encrypts the key in MAC SHA-256 bit hash.
 
