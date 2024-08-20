@@ -39,12 +39,12 @@ q: quit and self-destruct
 
 def selfdestruct():
    x = platform.platform()
-    if x.startswith("Linux"):
-        os.system('clear')
-    elif x.startswith("Windows"):
-        os.system('cls')
-    else:
-        os.system('clear')
+   if x.startswith("Linux"):
+       os.system('clear')
+   elif x.startswith("Windows"):
+       os.system('cls')
+   else:
+       os.system('clear')
 
 def get_ip_address():
     try:
